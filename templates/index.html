@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    {% for data in posts %}
+    <div class="col-lg-4">
+        <!-- Default Card Example -->
+        <div class="card mb-4">
+            <div class="card-header" style="color: white;background-color: #068d0d;">
+                <p style="text-align: center;" >{{data['prediction']}}</p>
+            </div>
+            <div class="card-body">
+                <img src="../static/images/{{data['image']}}" class="img-thumbnail"/>
+            </div>
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+
+    <!-- Bootstrap core JavaScript-->
+

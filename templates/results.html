@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-image">
+    <div class="jumbotron">
+    <div class="row justify-content-center">
+    <div class="col-lg-10 col-md-10 align-self-center">
+        <div class="card text-center">
+            <div class="card-header">
+                <p class="text-dark bold">RESULTS</p>
+            </div>
+            <div class="card-body">
+            <h5 class="card-title">{{status}}</h5>
+            <p class="card-text"> <img class="img-fluid" src="{{ path }}" alt="picture" width="500px" height="300"/></p>
+            </div>
+            <div class="card-footer text-muted">
+                <p>The results from our AI systems is {{status}}  </p>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</div>
+<div class="jumbotron jumbotron-fluid color-grey" style="margin-bottom: 0em; height:10em;">
+    <div class="row">
+       
+    </div>
+</div>
+{% endblock %}

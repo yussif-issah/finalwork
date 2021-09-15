@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row justify-content-center mb-5">
+        {% if crop == 'cotton' %}
+         <img src="../{{path}}" alt="no predictions yet"/>
+        {% elif crop == 'cocoa' %}
+        <img src="../{{path}}" alt="no predictions yet"/>
+        {% elif crop == 'coffe' %}
+        <img src="../{{path}}" alt="no predictions yet"/>
+        {% elif crop =='cocoa' %}
+        <img src="../{{path}}" alt="no predictions yet"/>
+        {% else %}
+        <p class="text-center text-dark">You have no plants posted yet</p>
+        {% endif %}
+    </div>
+{% endblock %}

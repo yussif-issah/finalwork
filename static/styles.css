@@ -1,0 +1,14 @@
+.bold{
+    font-weight: bold;
+}
+
+.bg-image{
+    background-image: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)), url("images/image.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.9;
+}
+
+.color-grey{
+    background-color:#117243;
+}

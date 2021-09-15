@@ -1,0 +1,130 @@
+{% extends 'base.html'%}
+{% block content%}
+<div class="row justify-content-center">
+    <button class="btn btn-success mb-5" id="camera">Snap Image
+        <div id="loading">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <div class="spinner-grow text-secondary" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+              <div class="spinner-grow text-danger" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+        </div>
+    </button>
+</div>
+<div class="row justify-content-center">
+    <div class="col-lg-4">
+        <!-- Default Card Example -->
+        <div class="card mb-4">
+            <div class="card-header" style="color: white;background-color: #068d0d;">
+                <p style="text-align: center;" ></p>
+            </div>
+            <div class="card-body">
+                <img src="{{link}}" class="img-thumbnail" alt="camera image will appear here"/>
+            </div>
+            <input type="hidden" value="{{link}}" id="link"/>
+            <input type="hidden" value="{{id}}" id="user_id">
+            <div class="card-footer">
+                <p id="results">Results will appear here</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center mb-2">
+   <p id="pred"></p>
+</div>
+<div class="row justify-content-center mb-2">
+    <div class="col-lg-4 col-sm-12 col-md-4">
+        <select class="form-control" id="crop">
+            <option value="select">Select The Type of crop</option>
+            <option value="cocoa">cocoa</option>
+            <option value="cotton">cotton</option>
+            <option value="coffe">coffe</option>
+        </select>
+    </div>
+</div>
+<div class="row justify-content-center mb-5">
+    <button class="btn btn-success" id="submit">Submit</button>
+</div>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-storage.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.9.1/firebase-analytics.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDbZhN0J_vIeursbhHDLC0Byze4-CM_WR4",
+  authDomain: "dronetry-cbc09.firebaseapp.com",
+  databaseURL: "https://dronetry-cbc09-default-rtdb.firebaseio.com",
+  projectId: "dronetry-cbc09",
+  storageBucket: "dronetry-cbc09.appspot.com",
+  messagingSenderId: "475234377420",
+  appId: "1:475234377420:web:de636bed729d33c4ccac69",
+  measurementId: "G-EGHW1E7PFH",
+  serviceAccount: "service.json"
+};
+
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+window.onload=function(e){
+   document.getElementById('pred').innerHTML=""
+   document.getElementById('loading').hidden=true
+}
+
+document.getElementById("camera").addEventListener('click',()=>{
+        document.getElementById("loading").hidden=false
+        database=firebase.database()
+        database.ref("/state").child("MjC9GlAy9nGGXZs1Xoj").update({state:1})
+        setTimeout(function(){
+            window.location.href="/droneimages"
+        },10000)
+    })
+
+document.getElementById("submit").addEventListener('click',()=>{
+    link=document.getElementById("link").value
+    crop=document.getElementById("crop").value
+    user_id=document.getElementById("user_id").value
+    document.getElementById("pred").innerHTML="wait please...."
+    if(crop=="cotton" || crop=="coffe" || crop=="cocoa"){
+        fetch("http://127.0.0.1:5000/mobile/droneImage",
+            {
+                method: 'POST',
+                body: JSON.stringify({'crop':crop,"imageUrl":link,"user_id":user_id}),
+                mode:'cors',
+                headers: {
+                    'Accept':'application/json'
+                }
+            }).then(response=>{
+                if(response.ok){
+                    return response
+                }else{
+                    var err=new Error("error"+response.status+"message"+response.statusText)
+                    err.response = response
+                    throw err
+                }
+            },error=>{
+               
+                var err=new Error(error.message)
+                throw err
+            }).then(response=>response.json())
+            .then(data=>{
+                document.getElementById("pred").innerHTML="Results is in"
+                document.getElementById("results").innerHTML=data['status']
+
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+    }else{
+        alert("invalid crop type selection")
+    }
+})
+</script>
+{% endblock %}

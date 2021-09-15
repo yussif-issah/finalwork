@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="bg-image" style="margin-top:0em; margin-bottom:0em; height:30em;">
+        <div class="row justify-content-center">
+            <div class="col-lg-10 col-md-10 align-self-center col-offse-lgt-2">
+                <div class="card text-center" style="margin-top: 8em;">
+                    <div class="card-header text-dark bg-white bold ">
+                    UPLOAD IMAGE
+                    </div>
+                    <div class="card-body">
+                        <form enctype="multipart/form-data" method="POST" action="http://127.0.0.1:5000/upload">
+                            <input type="file" name="photo" class="form-control">
+                            <div class="form-group">
+                            <select class="form-control mt-2 form-select" name="crop" aria-label="Default select example">
+                                <option selected>Please select the crop type </option>
+                                <option value="cocoa">Cocoa</option>
+                                <option value="cotton">Cotton</option>
+                                <option value="coffee">Coffe</option>
+                                <option value="Cattle">Cattle</option>
+                                <option value="chicken">Chicken</option>
+                              </select>
+                            </div>
+                            <button type="submit" class="btn color-grey text-white">Upload</a>
+                        </form>
+                    
+                    </div>
+                    <div class="card-footer text-muted bg-white">
+                        <p style="font-size: large; font-weight: bold;" class="text-dark">Your results will appear on the next page</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="color-grey" style="margin-bottom: 0em; height:10em;">
+        <div class="row">
+            <div class="col">
+            </div>
+        </div>
+    </div>
+{% endblock %}
